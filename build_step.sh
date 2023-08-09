@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "npm install"
-echo "npm run build"
+npm install
+npm run build
