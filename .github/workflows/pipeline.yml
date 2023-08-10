@@ -26,14 +26,13 @@ jobs:
         id: build
         run: npm run build
       - run: echo steps.build.conclusion
-      - name: Build failure
+      - name: Test Success
         uses: rjstone/discord-webhook-notify@v1
-        if: ${{  failure() && steps.build.conclusion == 'failure' }}
+        if: success()
         with:
-          severity: error
-          description: Build failed
-          details: commit ${{ join(github.event.commits.*.url, ' ') }}
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+            severity: info
+            details: Test Succeeded!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test
         run: npm run test
       - name: e2e tests
