@@ -25,10 +25,8 @@ jobs:
       - name: build
         id: build
         run: npm run build
-      - name: github context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: conclusion
+        run: echo "${{ steps.build.conclusion }}"
       # - name: Test Success
       #   uses: rjstone/discord-webhook-notify@v1
         # if: success()
