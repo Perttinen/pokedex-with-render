@@ -35,10 +35,6 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
