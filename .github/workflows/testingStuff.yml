@@ -1,9 +1,7 @@
 name: Testing stuff
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   a_test_job:
