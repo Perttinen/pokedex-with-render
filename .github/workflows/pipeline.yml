@@ -47,9 +47,7 @@ jobs:
         run: echo test did pass
       - name: tests not passed!
         if: ${{ !success() }}
-        run: echo test did not pass!
-      - name: Test job status
-        run: echo ${{ job.status }}
+        run: echo test did not pass! ${{ steps.build.conclusion }}
   deploy:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message,' '),'#skip')}}
     runs-on: ubuntu-20.04
