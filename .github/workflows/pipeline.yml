@@ -23,8 +23,6 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
-      - name: conclusion
-        run: echo "${{ steps.build.conclusion }}"
       # - name: Test Success
       #   uses: rjstone/discord-webhook-notify@v1
         # if: success()
@@ -42,7 +40,7 @@ jobs:
           wait-on: http://localhost:5000
       - name: tests passed
         if: ${{ success() }}
-        run: echo test did pass
+        run: echo ${{ toJSON(steps) }}
       - name: tests not passed!
         if: ${{ !success() }}
         run: echo ${{ toJSON(steps.*.conclusion) }}
