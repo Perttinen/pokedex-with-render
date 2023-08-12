@@ -20,10 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check style
-        id: Styling
         run: npm run eslint
       - name: build
-        id: build
         run: npm run build
       - name: conclusion
         run: echo "${{ steps.build.conclusion }}"
