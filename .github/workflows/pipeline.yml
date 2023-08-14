@@ -40,7 +40,7 @@ jobs:
           wait-on: http://localhost:5000
       - name: tests passed
         if: ${{ success() }}
-        run: echo tests passed :)
+        run: echo tests passed
       - name: tests not passed!
         if: ${{ !success() }}
         run: echo tests failed!
