@@ -23,13 +23,6 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
-      # - name: Test Success
-      #   uses: rjstone/discord-webhook-notify@v1
-        # if: success()
-        # with:
-        #     severity: info
-        #     details: Test Succeeded!
-        #     webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test
         run: npm run test
       - name: e2e tests
@@ -39,10 +32,15 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: tests passed
-        if: ${{ success() }}
-        run: echo tests passed
+        # uses: rjstone/discord-webhook-notify@v1
+        if:  ${{ success() }}
+        run: echo passed
+        # with:
+        #     severity: info
+        #     details: Test Succeeded!
+        #     webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: tests not passed!
-        if: ${{ !success() }}
+        if: ${{ always() && !success() }}
         run: echo tests failed!
   deploy:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message,' '),'#skip')}}
