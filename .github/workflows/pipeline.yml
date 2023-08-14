@@ -32,13 +32,12 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: tests passed
-        # uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1
         if:  ${{ success() }}
-        run: echo passed
-        # with:
-        #     severity: info
-        #     details: Test Succeeded!
-        #     webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+            severity: info
+            details: Tests passed :)
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: tests not passed!
         uses: rjstone/discord-webhook-notify@v1
         if: ${{ always() && !success() }}
