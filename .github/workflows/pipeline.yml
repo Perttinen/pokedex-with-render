@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    # if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
         if:  ${{ success() }}
         with:
             severity: info
-            details: Tests passed :)
+            details: Tests passed. Ready to merge!
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: tests not passed!
         uses: rjstone/discord-webhook-notify@v1
@@ -55,6 +55,20 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_KEY }}
+      - name: Deployed
+        uses: rjstone/discord-webhook-notify@v1
+        if:  ${{ success() }}
+        with:
+            severity: info
+            details: Succesfully deployed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Not deployed
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ always() && !success() }}
+        with:
+            severity: error
+            details: Deployment failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}  
   tag_release:
     needs: [deploy]
     runs-on: ubuntu-20.04
@@ -65,5 +79,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-            
-
+      - name: Tagged
+        uses: rjstone/discord-webhook-notify@v1
+        if:  ${{ success() }}
+        with:
+            severity: info
+            details: Succesfully tagged!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Not tagged
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ always() && !success() }}
+        with:
+            severity: error
+            details: Tagging failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
