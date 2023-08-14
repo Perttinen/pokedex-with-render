@@ -40,8 +40,13 @@ jobs:
         #     details: Test Succeeded!
         #     webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: tests not passed!
+        uses: rjstone/discord-webhook-notify@v1
         if: ${{ always() && !success() }}
-        run: echo tests failed!
+        with:
+            severity: error
+            details: Tests failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  
   deploy:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message,' '),'#skip')}}
     runs-on: ubuntu-20.04
