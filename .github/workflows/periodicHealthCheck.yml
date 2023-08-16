@@ -1,10 +1,13 @@
 name: Periodic health check
 
 on:
-  schedule:
-    - cron: '35/5 * * * *'
+  workflow_dispatch:
+
+  # Remove this comment to get scheduled checks!!
+  # schedule:
+  #   - cron: '35/5 * * * *'
 jobs:
-  test:
+  HealthCheck:
     runs-on: ubuntu-20.04
     steps:
       - run: echo toimii
